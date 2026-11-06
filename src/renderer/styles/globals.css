@@ -1,0 +1,102 @@
+/* ─────────────────────────────────────────────────────────────
+   Stage Browser — Global Styles
+   CSS reset + design tokens + base typography
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Color palette ─────────────────────────────────────── */
+  --bg-void:        #060608;
+  --bg-base:        #0d0d12;
+  --bg-surface-1:   #12121a;
+  --bg-surface-2:   #17171f;
+  --bg-surface-3:   #1e1e28;
+
+  /* Glass layers */
+  --glass-bg:       rgba(255, 255, 255, 0.04);
+  --glass-bg-hover: rgba(255, 255, 255, 0.07);
+  --glass-bg-active:rgba(255, 255, 255, 0.10);
+  --glass-border:   rgba(255, 255, 255, 0.08);
+  --glass-border-active: rgba(255, 255, 255, 0.18);
+
+  /* Accent */
+  --accent:         #7c6af7;
+  --accent-glow:    rgba(124, 106, 247, 0.35);
+  --accent-muted:   rgba(124, 106, 247, 0.15);
+
+  /* Text */
+  --text-primary:   rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-muted:     rgba(255, 255, 255, 0.28);
+
+  /* Status */
+  --color-success:  #34d399;
+  --color-warning:  #fbbf24;
+  --color-error:    #f87171;
+
+  /* ── Spacing ────────────────────────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+
+  /* ── Radii ──────────────────────────────────────────────── */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  22px;
+
+  /* ── Shadows / depth ────────────────────────────────────── */
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+  --shadow-sm:    0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-accent:0 0 24px var(--accent-glow);
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --titlebar-height:   40px;
+  --tabbar-height:     40px;
+  --navbar-height:     48px;
+  --sidebar-width:     220px;
+  --sidebar-collapsed: 52px;
+
+  /* ── Transitions ────────────────────────────────────────── */
+  --transition-fast: 120ms ease;
+  --transition-med:  220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 380ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  /* Prevent text selection while dragging chrome UI */
+  user-select: none;
+}
+
+/* Allow text selection inside webview content and URL bar */
+input, textarea, [contenteditable] {
+  user-select: text;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+

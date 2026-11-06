@@ -1,0 +1,45 @@
+.tabBar {
+  height: var(--tabbar-height);
+  display: flex;
+  align-items: flex-end;
+  background: var(--bg-surface-1);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0 var(--space-2);
+  gap: var(--space-1);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.tabBar::-webkit-scrollbar { display: none; }
+
+.tabList {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.newTab {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-left: var(--space-1);
+  margin-bottom: 4px;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.newTab:hover {
+  background: var(--glass-bg-hover);
+  color: var(--text-primary);
+}
+

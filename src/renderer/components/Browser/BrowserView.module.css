@@ -1,0 +1,23 @@
+.container {
+  position: absolute;
+  inset: 0;
+}
+
+.container.hidden {
+  /* Keep webview mounted (preserves page state) but visually hidden */
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.container.active {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.webview {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: flex;
+}
+
