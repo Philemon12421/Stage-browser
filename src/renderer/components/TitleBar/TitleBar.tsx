@@ -1,4 +1,5 @@
 import React from 'react'
+import Logo from '../Logo/Logo'
 import styles from './TitleBar.module.css'
 
 export default function TitleBar() {
@@ -8,18 +9,17 @@ export default function TitleBar() {
 
   return (
     <div className={styles.titleBar}>
-      {/* macOS-style traffic lights */}
+      {/* macOS-style traffic lights (left side) */}
       <div className={styles.controls}>
         <button className={`${styles.btn} ${styles.btnClose}`} onClick={close} title="Close" />
         <button className={`${styles.btn} ${styles.btnMinimize}`} onClick={minimize} title="Minimize" />
         <button className={`${styles.btn} ${styles.btnMaximize}`} onClick={maximize} title="Maximize" />
       </div>
 
-      {/* Centred app name — drag region */}
+      {/* Centred logo + name — drag region */}
       <div className={styles.dragRegion}>
-        <span className={styles.appName}>Stage Browser</span>
+        <Logo size={18} showText />
       </div>
     </div>
   )
 }
-
