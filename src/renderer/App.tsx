@@ -141,6 +141,7 @@ const S: Record<string, React.CSSProperties> = {
     flex: 1,
     position: 'relative',
     overflow: 'hidden',
+    paddingBottom: '80px',
   },
   browserArea: {
     position: 'absolute',
