@@ -26,7 +26,7 @@ export function normalizeUrl(input: string, engine: keyof typeof SEARCH_ENGINES 
   if (!t || t === 'stage://newtab') return t
   if (/^[a-z][a-z0-9+\-.]*:\/\//i.test(t)) return t
   if (/^localhost(:\d+)?/.test(t) || /^127\.|^192\.|^10\./.test(t)) return `http://${t}`
-  if (!t.includes(' ') && t.includes('.') && t.length > 2) return `https://${t}`
+  if (!t.includes(' ') && t.includes('.') && /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(t)) return `https://${t}`
   return `${SEARCH_ENGINES[engine]}${encodeURIComponent(t)}`
 }
 

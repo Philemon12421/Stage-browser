@@ -70,7 +70,7 @@ export const useBrowserStore = create<BrowserState>((set, get) => ({
       if (remaining.length === 0) {
         const freshId = newId()
         return {
-          tabs: [{ id: freshId, title: 'New Tab', url: HOME_URL, isLoading: false }],
+          tabs: [{ id: freshId, title: 'New Tab', url: HOME_URL, isLoading: false, canGoBack: false, canGoForward: false }],
           activeTabId: freshId,
           closedTabs: closedEntry ? [closedEntry, ...s.closedTabs].slice(0, 20) : s.closedTabs,
         }
