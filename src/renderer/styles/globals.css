@@ -1,71 +1,96 @@
-/* ─────────────────────────────────────────────────────────────
-   Stage Browser — Global Styles
-   CSS reset + design tokens + base typography
-   ───────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   STAGE BROWSER — Global Design System
+   Liquid-Black Aesthetic · Premium Glassmorphism
+   ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  /* ── Color palette ─────────────────────────────────────── */
-  --bg-void:        #060608;
-  --bg-base:        #0d0d12;
-  --bg-surface-1:   #12121a;
-  --bg-surface-2:   #17171f;
-  --bg-surface-3:   #1e1e28;
+  /* ── Liquid-black palette ──────────────────────────────────── */
+  --bg-void:         #000000;
+  --bg-obsidian:     #050507;
+  --bg-base:         #080809;
+  --bg-graphite:     #0d0d10;
+  --bg-surface-1:    #111114;
+  --bg-surface-2:    #161619;
+  --bg-surface-3:    #1c1c20;
+  --bg-surface-4:    #232328;
 
-  /* Glass layers */
-  --glass-bg:       rgba(255, 255, 255, 0.04);
-  --glass-bg-hover: rgba(255, 255, 255, 0.07);
-  --glass-bg-active:rgba(255, 255, 255, 0.10);
-  --glass-border:   rgba(255, 255, 255, 0.08);
-  --glass-border-active: rgba(255, 255, 255, 0.18);
+  /* ── Glass layers ──────────────────────────────────────────── */
+  --glass-ultra:     rgba(255, 255, 255, 0.025);
+  --glass-low:       rgba(255, 255, 255, 0.04);
+  --glass-mid:       rgba(255, 255, 255, 0.07);
+  --glass-high:      rgba(255, 255, 255, 0.11);
+  --glass-border:    rgba(255, 255, 255, 0.07);
+  --glass-border-hi: rgba(255, 255, 255, 0.15);
+  --glass-shine:     rgba(255, 255, 255, 0.04);
 
-  /* Accent */
-  --accent:         #7c6af7;
-  --accent-glow:    rgba(124, 106, 247, 0.35);
-  --accent-muted:   rgba(124, 106, 247, 0.15);
+  /* ── Accent (cool violet) ──────────────────────────────────── */
+  --accent:          #8b7cf8;
+  --accent-bright:   #a78bfa;
+  --accent-dim:      #6d5de6;
+  --accent-glow:     rgba(139, 124, 248, 0.4);
+  --accent-muted:    rgba(139, 124, 248, 0.12);
+  --accent-subtle:   rgba(139, 124, 248, 0.06);
 
-  /* Text */
-  --text-primary:   rgba(255, 255, 255, 0.92);
-  --text-secondary: rgba(255, 255, 255, 0.55);
-  --text-muted:     rgba(255, 255, 255, 0.28);
+  /* ── Silver / reflective ───────────────────────────────────── */
+  --silver:          rgba(200, 200, 220, 0.85);
+  --silver-dim:      rgba(160, 160, 180, 0.5);
+  --silver-muted:    rgba(130, 130, 150, 0.3);
 
-  /* Status */
-  --color-success:  #34d399;
-  --color-warning:  #fbbf24;
-  --color-error:    #f87171;
+  /* ── Typography ────────────────────────────────────────────── */
+  --text-primary:    rgba(255, 255, 255, 0.95);
+  --text-secondary:  rgba(255, 255, 255, 0.60);
+  --text-muted:      rgba(255, 255, 255, 0.30);
+  --text-faint:      rgba(255, 255, 255, 0.15);
 
-  /* ── Spacing ────────────────────────────────────────────── */
+  /* ── Status ────────────────────────────────────────────────── */
+  --color-success:   #34d399;
+  --color-warning:   #fbbf24;
+  --color-error:     #f87171;
+  --color-info:      #60a5fa;
+
+  /* ── Spacing ────────────────────────────────────────────────── */
   --space-1:  4px;
   --space-2:  8px;
   --space-3:  12px;
   --space-4:  16px;
   --space-5:  20px;
   --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
 
-  /* ── Radii ──────────────────────────────────────────────── */
-  --radius-sm:  6px;
-  --radius-md:  10px;
-  --radius-lg:  16px;
-  --radius-xl:  22px;
+  /* ── Radii ──────────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   18px;
+  --radius-xl:   26px;
+  --radius-pill: 9999px;
 
-  /* ── Shadows / depth ────────────────────────────────────── */
-  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.06);
-  --shadow-sm:    0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-accent:0 0 24px var(--accent-glow);
+  /* ── Shadows ────────────────────────────────────────────────── */
+  --shadow-xs:    0 1px 4px rgba(0,0,0,0.5);
+  --shadow-sm:    0 2px 10px rgba(0,0,0,0.6);
+  --shadow-md:    0 6px 24px rgba(0,0,0,0.7);
+  --shadow-lg:    0 12px 48px rgba(0,0,0,0.8);
+  --shadow-xl:    0 24px 80px rgba(0,0,0,0.9);
+  --shadow-glass: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+  --shadow-glow:  0 0 32px var(--accent-glow);
 
-  /* ── Layout ─────────────────────────────────────────────── */
-  --titlebar-height:   40px;
-  --tabbar-height:     40px;
-  --navbar-height:     48px;
-  --sidebar-width:     220px;
-  --sidebar-collapsed: 52px;
+  /* ── Layout ─────────────────────────────────────────────────── */
+  --titlebar-height:   38px;
+  --tabbar-height:     38px;
+  --navbar-height:     46px;
+  --bottomnav-height:  60px;
 
-  /* ── Transitions ────────────────────────────────────────── */
-  --transition-fast: 120ms ease;
-  --transition-med:  220ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 380ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* ── Transitions ─────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-fast:  120ms ease;
+  --t-med:   220ms var(--ease-in-out);
+  --t-slow:  380ms var(--ease-out);
 }
 
-/* ── Reset ───────────────────────────────────────────────────── */
+/* ── Reset ────────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -79,24 +104,47 @@ html, body, #root {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
   font-size: 13px;
   line-height: 1.5;
   color: var(--text-primary);
   background: var(--bg-base);
   -webkit-font-smoothing: antialiased;
-  /* Prevent text selection while dragging chrome UI */
+  -moz-osx-font-smoothing: grayscale;
   user-select: none;
 }
 
-/* Allow text selection inside webview content and URL bar */
 input, textarea, [contenteditable] {
   user-select: text;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
 
+/* ── Scrollbar ────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* ── Utility animations ───────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}

@@ -1,83 +1,120 @@
-import React, { useEffect, useRef } from 'react'
-import { Tab } from '../../store/browserStore'
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import { Tab, HOME_URL } from '../../store/browserStore'
 import { useBrowserStore } from '../../store/browserStore'
+import { useAppStore } from '../../store/appStore'
 import styles from './BrowserView.module.css'
+
+export interface WebviewHandle {
+  goBack: () => void
+  goForward: () => void
+  reload: () => void
+  stop: () => void
+  loadURL: (url: string) => void
+}
 
 interface Props {
   tab: Tab
   isActive: boolean
-  registerRef: (el: Electron.WebviewTag | null) => void
 }
 
-export default function BrowserView({ tab, isActive, registerRef }: Props) {
-  const webviewRef = useRef<Electron.WebviewTag>(null)
+const BrowserView = forwardRef<WebviewHandle, Props>(({ tab, isActive }, ref) => {
+  const wvRef = useRef<Electron.WebviewTag>(null)
   const { updateTab } = useBrowserStore()
+  const { addHistory } = useAppStore()
+
+  useImperativeHandle(ref, () => ({
+    goBack: () => wvRef.current?.goBack(),
+    goForward: () => wvRef.current?.goForward(),
+    reload: () => wvRef.current?.reload(),
+    stop: () => wvRef.current?.stop(),
+    loadURL: (url: string) => wvRef.current?.loadURL(url),
+  }))
 
   useEffect(() => {
-    registerRef(webviewRef.current)
-    return () => registerRef(null)
-  }, [registerRef])
-
-  useEffect(() => {
-    const wv = webviewRef.current
+    const wv = wvRef.current
     if (!wv) return
 
-    const onStartLoad = () => {
-      updateTab(tab.id, { isLoading: true })
-    }
+    const onStart = () => updateTab(tab.id, { isLoading: true })
 
-    const onStopLoad = () => {
-      updateTab(tab.id, { isLoading: false })
-      if (wv.getURL) {
-        const currentUrl = wv.getURL()
-        const title = wv.getTitle?.() || currentUrl
-        updateTab(tab.id, { url: currentUrl, title: title || 'New Tab' })
+    const onStop = () => {
+      const url = wv.getURL?.() ?? tab.url
+      const title = wv.getTitle?.() || 'New Tab'
+      updateTab(tab.id, {
+        isLoading: false,
+        url,
+        title,
+        canGoBack: wv.canGoBack?.() ?? false,
+        canGoForward: wv.canGoForward?.() ?? false,
+      })
+      if (url && url !== HOME_URL && !url.startsWith('chrome-error://')) {
+        addHistory({ title, url })
       }
     }
 
-    const onTitleUpdate = (e: Electron.PageTitleUpdatedEvent) => {
+    const onTitle = (e: Electron.PageTitleUpdatedEvent) => {
       updateTab(tab.id, { title: e.title || 'New Tab' })
     }
 
-    const onFaviconUpdate = (e: Electron.PageFaviconUpdatedEvent) => {
-      if (e.favicons && e.favicons.length > 0) {
-        updateTab(tab.id, { favicon: e.favicons[0] })
-      }
+    const onFavicon = (e: Electron.PageFaviconUpdatedEvent) => {
+      if (e.favicons?.[0]) updateTab(tab.id, { favicon: e.favicons[0] })
     }
 
     const onNavigate = (e: Electron.DidNavigateEvent) => {
+      updateTab(tab.id, {
+        url: e.url,
+        canGoBack: wv.canGoBack?.() ?? false,
+        canGoForward: wv.canGoForward?.() ?? false,
+      })
+    }
+
+    const onInPageNav = (e: any) => {
       updateTab(tab.id, { url: e.url })
     }
 
-    wv.addEventListener('did-start-loading', onStartLoad)
-    wv.addEventListener('did-stop-loading', onStopLoad)
-    wv.addEventListener('page-title-updated', onTitleUpdate)
-    wv.addEventListener('page-favicon-updated', onFaviconUpdate)
+    const onFailLoad = (e: Electron.DidFailLoadEvent) => {
+      if (e.errorCode !== -3) { // -3 = aborted (user navigated away)
+        updateTab(tab.id, { isLoading: false, title: 'Error' })
+      }
+    }
+
+    wv.addEventListener('did-start-loading', onStart)
+    wv.addEventListener('did-stop-loading', onStop)
+    wv.addEventListener('page-title-updated', onTitle)
+    wv.addEventListener('page-favicon-updated', onFavicon)
     wv.addEventListener('did-navigate', onNavigate)
-    wv.addEventListener('did-navigate-in-page', onNavigate as any)
+    wv.addEventListener('did-navigate-in-page', onInPageNav)
+    wv.addEventListener('did-fail-load', onFailLoad)
 
     return () => {
-      wv.removeEventListener('did-start-loading', onStartLoad)
-      wv.removeEventListener('did-stop-loading', onStopLoad)
-      wv.removeEventListener('page-title-updated', onTitleUpdate)
-      wv.removeEventListener('page-favicon-updated', onFaviconUpdate)
+      wv.removeEventListener('did-start-loading', onStart)
+      wv.removeEventListener('did-stop-loading', onStop)
+      wv.removeEventListener('page-title-updated', onTitle)
+      wv.removeEventListener('page-favicon-updated', onFavicon)
       wv.removeEventListener('did-navigate', onNavigate)
-      wv.removeEventListener('did-navigate-in-page', onNavigate as any)
+      wv.removeEventListener('did-navigate-in-page', onInPageNav)
+      wv.removeEventListener('did-fail-load', onFailLoad)
     }
-  }, [tab.id, updateTab])
+  }, [tab.id])
+
+  // Don't render webview for new-tab home page
+  if (tab.url === HOME_URL) {
+    return <div className={`${styles.container} ${isActive ? styles.active : styles.hidden}`} />
+  }
 
   return (
     <div className={`${styles.container} ${isActive ? styles.active : styles.hidden}`}>
-      {/* @ts-ignore — webview is a custom Electron element not in React's JSX types */}
+      {/* @ts-ignore */}
       <webview
-        ref={webviewRef}
+        ref={wvRef}
         className={styles.webview}
         src={tab.url}
-        allowpopups="false"
         partition="persist:main"
-        webpreferences="contextIsolation=yes, javascript=yes"
+        allowpopups=""
+        webpreferences="contextIsolation=yes,javascript=yes,images=yes"
       />
     </div>
   )
-}
+})
 
+BrowserView.displayName = 'BrowserView'
+export default BrowserView

@@ -1,5 +1,3 @@
-// Global type augmentation for the contextBridge API surface exposed by preload/index.ts
-
 interface WindowControls {
   minimize: () => void
   maximize: () => void
@@ -22,4 +20,3 @@ declare global {
 }
 
 export {}
-

@@ -1,17 +1,19 @@
 .container {
   position: absolute;
   inset: 0;
+  background: var(--bg-base);
 }
 
-.container.hidden {
-  /* Keep webview mounted (preserves page state) but visually hidden */
+.hidden {
   visibility: hidden;
   pointer-events: none;
+  z-index: 0;
 }
 
-.container.active {
+.active {
   visibility: visible;
   pointer-events: auto;
+  z-index: 1;
 }
 
 .webview {
@@ -20,4 +22,3 @@
   border: none;
   display: flex;
 }
-
