@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useEffect } from 'react'
 import { useBrowserStore, HOME_URL } from './store/browserStore'
 import { useAppStore } from './store/appStore'
 import { WebviewHandle } from './components/Browser/BrowserView'
@@ -14,7 +14,11 @@ import { BookmarksPage, HistoryPage, DownloadsPage, ExtensionsPage } from './com
 
 export default function App() {
   const { tabs, activeTabId, addTab, updateTab } = useBrowserStore()
-  const { currentPage, navigateTo } = useAppStore()
+  const { currentPage, navigateTo, settings } = useAppStore()
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', settings.theme)
+  }, [settings.theme])
 
   // Map tab id → webview imperative handle
   const webviewRefs = useRef<Map<string, WebviewHandle>>(new Map())

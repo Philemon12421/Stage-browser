@@ -57,9 +57,14 @@ export default function SettingsPage() {
 
         {section === 'appearance' && (
           <Section title="Appearance">
-            <Field label="Theme" description="Stage Browser uses a premium dark theme.">
-              <select className={styles.select} value="dark" disabled>
+            <Field label="Theme" description="Choose a custom theme for the browser.">
+              <select className={styles.select} value={settings.theme} onChange={(e) => updateSettings({ theme: e.target.value as any })}>
                 <option value="dark">Dark (Liquid Black)</option>
+                <option value="google">Light (Google Clone)</option>
+                <option value="midnight">Midnight Blue</option>
+                <option value="ocean">Ocean Teal</option>
+                <option value="forest">Forest Green</option>
+                <option value="sunset">Sunset Red</option>
               </select>
             </Field>
             <Field label="Bookmarks bar" description="Show saved bookmarks below the address bar.">
