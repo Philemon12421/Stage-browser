@@ -2,7 +2,7 @@
   position: absolute;
   inset: 0;
   display: flex;
-  background: #000000;
+  background: var(--bg-void);
   overflow: hidden;
   animation: fadeIn 250ms var(--ease-out) both;
 }

@@ -21,7 +21,7 @@ export interface HistoryEntry {
 export interface AppSettings {
   homePage: string
   searchEngine: 'google' | 'bing' | 'duckduckgo' | 'brave'
-  theme: 'dark'
+  theme: 'dark' | 'google' | 'midnight' | 'ocean' | 'forest' | 'sunset'
   newTabPage: 'stage' | 'blank'
   showBookmarksBar: boolean
   downloadPath: string
